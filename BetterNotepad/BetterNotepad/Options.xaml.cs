@@ -23,5 +23,19 @@ namespace BetterNotepad
         {
             InitializeComponent();
         }
+
+
+
+        private void chckbox_theme_Checked(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).rtb_note.Background = Brushes.Black;
+            ((MainWindow)Application.Current.MainWindow).rtb_note.Foreground = Brushes.White;
+        }
+
+        private void chckbox_theme_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).rtb_note.Background = Brushes.White;
+            ((MainWindow)Application.Current.MainWindow).rtb_note.Foreground = Brushes.Black;
+        }
     }
 }

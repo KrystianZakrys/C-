@@ -37,7 +37,7 @@ namespace BetterNotepad.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Consolas")]
         public global::System.Windows.Media.FontFamily FontFamily {
             get {
                 return ((global::System.Windows.Media.FontFamily)(this["FontFamily"]));
@@ -68,6 +68,18 @@ namespace BetterNotepad.Properties {
             }
             set {
                 this["Italic"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Light")]
+        public string Theme {
+            get {
+                return ((string)(this["Theme"]));
+            }
+            set {
+                this["Theme"] = value;
             }
         }
     }

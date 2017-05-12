@@ -5,14 +5,17 @@
     <Setting Name="Size" Type="System.Double" Scope="User">
       <Value Profile="(Default)">9</Value>
     </Setting>
-    <Setting Name="FontFamily" Type="System.Drawing.Font" Scope="User">
-      <Value Profile="(Default)">Segoe UI, 8.25pt</Value>
+    <Setting Name="FontFamily" Type="System.Windows.Media.FontFamily" Scope="User">
+      <Value Profile="(Default)">Consolas</Value>
     </Setting>
     <Setting Name="Bold" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Italic" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Theme" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Light</Value>
     </Setting>
   </Settings>
 </SettingsFile>

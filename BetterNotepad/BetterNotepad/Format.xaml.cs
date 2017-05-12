@@ -46,6 +46,7 @@ namespace BetterNotepad
             Properties.Settings.Default["Italic"] = (example_label.FontStyle == FontStyles.Italic) ? true : false;
             Properties.Settings.Default.Save();
             ((MainWindow)Application.Current.MainWindow).reloadSettings();
+            this.Close();
         }
 
         private void slider_size_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

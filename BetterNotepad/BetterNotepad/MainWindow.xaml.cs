@@ -24,9 +24,21 @@ namespace BetterNotepad
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += MyWindow_Loaded;
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Close,
                 new ExecutedRoutedEventHandler(delegate (object sender, ExecutedRoutedEventArgs args) { this.Close(); })));
         }
+
+
+        private void MyWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            rtb_note.FontFamily = (FontFamily)Properties.Settings.Default["FontFamily"];
+            rtb_note.FontSize = (double)Properties.Settings.Default["Size"];
+            rtb_note.FontWeight = ((bool)Properties.Settings.Default["Bold"]) ? FontWeights.Bold : FontWeights.Normal;
+            rtb_note.FontStyle = ((bool)Properties.Settings.Default["Italic"]) ? FontStyles.Italic : FontStyles.Normal;
+        }
+    
+
         public void DragWindow(object sender, MouseButtonEventArgs args)
         {
             DragMove();

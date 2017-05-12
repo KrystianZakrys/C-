@@ -43,7 +43,7 @@
                         <Button Name="btn_options" Background="CadetBlue" Padding="10,0,10,0" BorderBrush="{x:Null}"
                                 Click="btn_options_Click">Options</Button>
                         <Button Name="btn_format" Background="CadetBlue" Padding="10,0,10,0" BorderBrush="{x:Null}"
-                                Click="btn_format_Click">Options</Button>
+                                Click="btn_format_Click">Format</Button>
                     </StackPanel>
                 </Grid>
             </Border>

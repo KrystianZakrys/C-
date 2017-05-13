@@ -19,23 +19,39 @@ namespace BetterNotepad
     /// </summary>
     public partial class Options : Window
     {
+
+        public List<ThemeModel> theme_list = new List<ThemeModel> {
+            new ThemeModel("Light",Brushes.White,Brushes.Black),
+            new ThemeModel("Dark",Brushes.Black,Brushes.White),
+        };
+
+
         public Options()
         {
             InitializeComponent();
+            cb_theme.SelectedItem = theme_list.Find(q => q.Name == Properties.Settings.Default["Theme"].ToString());
+            DataContext = theme_list;
         }
 
 
 
-        private void chckbox_theme_Checked(object sender, RoutedEventArgs e)
+     
+
+        private void btn_save_options_Click(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).rtb_note.Background = Brushes.Black;
-            ((MainWindow)Application.Current.MainWindow).rtb_note.Foreground = Brushes.White;
+            Properties.Settings.Default["Theme"] = (cb_theme.SelectedItem as ThemeModel).Name;
+            Properties.Settings.Default.Save();
+            ((MainWindow)Application.Current.MainWindow).reloadSettings();
+            this.Close();
         }
 
-        private void chckbox_theme_Unchecked(object sender, RoutedEventArgs e)
+        private void cb_theme_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).rtb_note.Background = Brushes.White;
-            ((MainWindow)Application.Current.MainWindow).rtb_note.Foreground = Brushes.Black;
+            var cb = sender as ComboBox;
+            var item = cb.SelectedItem as ThemeModel;
+
+            ((MainWindow)Application.Current.MainWindow).rtb_note.Background = item.TH_background;
+            ((MainWindow)Application.Current.MainWindow).rtb_note.Foreground = item.TH_foreground;
         }
     }
 }

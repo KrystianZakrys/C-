@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -62,24 +63,7 @@ namespace BetterNotepad
             rtb_note.Opacity = opacity_slider.Value;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
-            {
-                Application.Current.MainWindow.WindowState = WindowState.Normal;
-            }
-            else
-            {
-                Application.Current.MainWindow.WindowState = WindowState.Maximized;
-            }
-
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            Application.Current.MainWindow.WindowState = WindowState.Minimized;
-        }
-
+     
         private void btn_options_Click(object sender, RoutedEventArgs e)
         {
             Options opt_window = new Options();
@@ -102,6 +86,85 @@ namespace BetterNotepad
             ThemeModel th = theme_list.Find(q => q.Name == Properties.Settings.Default["Theme"].ToString());
             rtb_note.Background = th.TH_background;
             rtb_note.Foreground = th.TH_foreground;
+        }
+
+        private void btn_maximize_Click(object sender, RoutedEventArgs e)
+        {
+            if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Normal;
+            }
+            else
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            }
+
+        }
+
+        private void btn_minimize_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+        }
+
+        private void btn_newFile_Click(object sender, RoutedEventArgs e)
+        {
+           rtb_note.Document.Blocks.Clear();
+        }
+
+        private void btn_openFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_saveFile_Click(object sender, RoutedEventArgs e)
+        {
+            SaveToFile();
+        }
+
+        private void btn_saveFileAs_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private bool IsRichTextBoxEmpty(RichTextBox rtb)
+        {
+            if (rtb.Document.Blocks.Count == 0) return true;
+            TextPointer startPointer = rtb.Document.ContentStart.GetNextInsertionPosition(LogicalDirection.Forward);
+            TextPointer endPointer = rtb.Document.ContentEnd.GetNextInsertionPosition(LogicalDirection.Backward);
+            return startPointer.CompareTo(endPointer) == 0;
+        }
+
+        private void SaveToFile()
+        {
+            TextRange t = new TextRange(rtb_note.Document.ContentStart,
+                                     rtb_note.Document.ContentEnd);
+            FileStream file = new FileStream("Sample File.txt", FileMode.Create);
+            t.Save(file, System.Windows.DataFormats.Text);
+            file.Close();
+        }
+
+        private void btn_close_Click(object sender, RoutedEventArgs e)
+        {
+            if(IsRichTextBoxEmpty(rtb_note))
+            {
+                MessageBoxResult mb = MessageBox.Show("Are you sure?","Closing...",MessageBoxButton.YesNoCancel,MessageBoxImage.Exclamation);
+                switch (mb)
+                {
+                    case MessageBoxResult.None:
+                        return;
+                    case MessageBoxResult.Cancel:
+                        return;
+                    case MessageBoxResult.Yes:
+                        SaveToFile();
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            Application.Current.Shutdown();
+
         }
     }
 }

@@ -14,7 +14,7 @@
     <Setting Name="Italic" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="Theme" Type="System.String" Scope="User">
+    <Setting Name="Theme" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Light</Value>
     </Setting>
   </Settings>

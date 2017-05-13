@@ -21,6 +21,14 @@ namespace BetterNotepad
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// REDUNDANT ! NEED TO CREATE OWN SETTING TYPE
+        /// </summary>
+        public List<ThemeModel> theme_list = new List<ThemeModel> {
+            new ThemeModel("Light",Brushes.White,Brushes.Black),
+            new ThemeModel("Dark",Brushes.Black,Brushes.White),
+        };
+
         public MainWindow()
         {
             InitializeComponent();
@@ -36,6 +44,10 @@ namespace BetterNotepad
             rtb_note.FontSize = (double)Properties.Settings.Default["Size"];
             rtb_note.FontWeight = ((bool)Properties.Settings.Default["Bold"]) ? FontWeights.Bold : FontWeights.Normal;
             rtb_note.FontStyle = ((bool)Properties.Settings.Default["Italic"]) ? FontStyles.Italic : FontStyles.Normal;
+
+            ThemeModel th = theme_list.Find(q => q.Name == Properties.Settings.Default["Theme"].ToString());
+            rtb_note.Background = th.TH_background;
+            rtb_note.Foreground = th.TH_foreground;
         }
     
 
@@ -86,6 +98,10 @@ namespace BetterNotepad
             rtb_note.FontSize = (double)Properties.Settings.Default["Size"];
             rtb_note.FontWeight = ((bool)Properties.Settings.Default["Bold"]) ? FontWeights.Bold : FontWeights.Normal;
             rtb_note.FontStyle = ((bool)Properties.Settings.Default["Italic"]) ? FontStyles.Italic : FontStyles.Normal;
+
+            ThemeModel th = theme_list.Find(q => q.Name == Properties.Settings.Default["Theme"].ToString());
+            rtb_note.Background = th.TH_background;
+            rtb_note.Foreground = th.TH_foreground;
         }
     }
 }

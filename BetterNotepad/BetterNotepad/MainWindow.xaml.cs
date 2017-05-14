@@ -28,11 +28,17 @@ namespace BetterNotepad
         public List<ThemeModel> theme_list = new List<ThemeModel> {
             new ThemeModel("Light",Brushes.White,Brushes.Black),
             new ThemeModel("Dark",Brushes.Black,Brushes.White),
+            new ThemeModel("Matrix", Brushes.Black, Brushes.Green),
+            new ThemeModel("Chocolate", Brushes.SaddleBrown, Brushes.DarkOrange),
         };
+
+        string openedFile = "";
+        string _title = "Better Notepad v0.01a";
 
         public MainWindow()
         {
             InitializeComponent();
+
             Loaded += MyWindow_Loaded;
             CommandBindings.Add(new CommandBinding(ApplicationCommands.Close,
                 new ExecutedRoutedEventHandler(delegate (object sender, ExecutedRoutedEventArgs args) { this.Close(); })));
@@ -50,7 +56,7 @@ namespace BetterNotepad
             rtb_note.Background = th.TH_background;
             rtb_note.Foreground = th.TH_foreground;
         }
-    
+
 
         public void DragWindow(object sender, MouseButtonEventArgs args)
         {
@@ -63,7 +69,7 @@ namespace BetterNotepad
             rtb_note.Opacity = opacity_slider.Value;
         }
 
-     
+
         private void btn_options_Click(object sender, RoutedEventArgs e)
         {
             Options opt_window = new Options();
@@ -108,22 +114,61 @@ namespace BetterNotepad
 
         private void btn_newFile_Click(object sender, RoutedEventArgs e)
         {
-           rtb_note.Document.Blocks.Clear();
+            rtb_note.Document.Blocks.Clear();
+            openedFile = "";
+            this.Title = _title;
+
         }
 
         private void btn_openFile_Click(object sender, RoutedEventArgs e)
         {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+
+
+            // Set filter for file extension and default file extension 
+
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+            string filename = "";
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                // Open document 
+                filename = dlg.FileName;
+                openedFile = filename;
+                this.Title = _title + "  -  " + openedFile;
+
+                TextRange t = new TextRange(rtb_note.Document.ContentStart,
+                                    rtb_note.Document.ContentEnd);
+                FileStream file = new FileStream(filename, FileMode.Open);
+                t.Load(file, System.Windows.DataFormats.Text);
+                file.Close();
+            }
+
+
 
         }
 
+
         private void btn_saveFile_Click(object sender, RoutedEventArgs e)
         {
-            SaveToFile();
+            if (openedFile == null || openedFile == "")
+            {
+                SaveFileAs();
+            }
+            else
+            {
+                SaveToFile(openedFile);
+            }
+
         }
 
         private void btn_saveFileAs_Click(object sender, RoutedEventArgs e)
         {
-
+            SaveFileAs();
         }
 
         private bool IsRichTextBoxEmpty(RichTextBox rtb)
@@ -134,20 +179,60 @@ namespace BetterNotepad
             return startPointer.CompareTo(endPointer) == 0;
         }
 
-        private void SaveToFile()
+        private void SaveToFile(string file_path)
         {
-            TextRange t = new TextRange(rtb_note.Document.ContentStart,
-                                     rtb_note.Document.ContentEnd);
-            FileStream file = new FileStream("Sample File.txt", FileMode.Create);
-            t.Save(file, System.Windows.DataFormats.Text);
-            file.Close();
+            if (file_path == null || file_path == "")
+            {
+                SaveFileAs();
+            }
+            else
+            {
+                TextRange t = new TextRange(rtb_note.Document.ContentStart,
+                                    rtb_note.Document.ContentEnd);
+                FileStream file = new FileStream(file_path, FileMode.Create);
+                openedFile = file_path;
+                this.Title = _title + "  -  " + openedFile;
+                t.Save(file, System.Windows.DataFormats.Text);
+                file.Close();
+            }
+
+        }
+
+        private void SaveFileAs()
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+
+
+
+            // Set filter for file extension and default file extension 
+
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+            string filename = "";
+
+            // Get the selected file name and display in a TextBox 
+            if (result == true)
+            {
+                // Open document 
+                filename = dlg.FileName;
+                openedFile = filename;
+                this.Title = _title + "  -  " + openedFile;
+                TextRange t = new TextRange(rtb_note.Document.ContentStart,
+                                  rtb_note.Document.ContentEnd);
+                FileStream file = new FileStream(filename, FileMode.Create);
+                t.Save(file, System.Windows.DataFormats.Text);
+                file.Close();
+            }
+
+
         }
 
         private void btn_close_Click(object sender, RoutedEventArgs e)
         {
-            if(IsRichTextBoxEmpty(rtb_note))
+            if (IsRichTextBoxEmpty(rtb_note))
             {
-                MessageBoxResult mb = MessageBox.Show("Are you sure?","Closing...",MessageBoxButton.YesNoCancel,MessageBoxImage.Exclamation);
+                MessageBoxResult mb = MessageBox.Show("Are you sure?", "Closing...", MessageBoxButton.YesNoCancel, MessageBoxImage.Exclamation);
                 switch (mb)
                 {
                     case MessageBoxResult.None:
@@ -155,7 +240,7 @@ namespace BetterNotepad
                     case MessageBoxResult.Cancel:
                         return;
                     case MessageBoxResult.Yes:
-                        SaveToFile();
+                        SaveToFile(openedFile);
                         break;
                     case MessageBoxResult.No:
                         break;

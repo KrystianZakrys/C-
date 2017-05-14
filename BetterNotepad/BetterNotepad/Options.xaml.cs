@@ -23,6 +23,8 @@ namespace BetterNotepad
         public List<ThemeModel> theme_list = new List<ThemeModel> {
             new ThemeModel("Light",Brushes.White,Brushes.Black),
             new ThemeModel("Dark",Brushes.Black,Brushes.White),
+            new ThemeModel("Matrix", Brushes.Black, Brushes.Green),
+            new ThemeModel("Chocolate", Brushes.SaddleBrown, Brushes.DarkOrange),
         };
 
 

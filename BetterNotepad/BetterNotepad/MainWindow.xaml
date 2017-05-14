@@ -86,7 +86,7 @@
                 </Grid>
             </Border>
             <RichTextBox Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Visible"
-                         Name="rtb_note" Block.LineHeight="1.333" Padding="10,0,10,0" ScrollViewer.CanContentScroll="True"></RichTextBox>
+                         Name="rtb_note" Block.LineHeight="1.333" Padding="10,0,10,0" ScrollViewer.CanContentScroll="True" AcceptsTab="True"></RichTextBox>
             <Grid Grid.Row="2" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

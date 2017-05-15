@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace YTAudioPlayer
+namespace UniPlayer
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,9 +23,11 @@ namespace YTAudioPlayer
     public partial class MainWindow : Window
     {
 
-        public List<string> songList = new List<string>()
+        public List<Song> songList = new List<Song>()
         {
-            "pierwszy song","drugi song","trzeci song", "czwarty song","piąty song","6 song","7 song"
+            new Song("xD",2,"brak"),
+            new Song("xD2",2,"brak"),
+            new Song("xD3",2,"brak"),
         };
 
         public MainWindow()

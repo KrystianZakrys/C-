@@ -1,0 +1,93 @@
+﻿<Window x:Class="Narzędziownia.ToDo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Narzędziownia"
+        mc:Ignorable="d"
+        Title="ToDo" Height="394.154" Width="493.886"  >
+    <Window.Resources>
+        <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
+
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="3" BorderBrush="Black" BorderThickness="0" Padding="10,6,10,6" Margin="1,10,1,10">
+                                <Border.Background>
+                                    <RadialGradientBrush GradientOrigin="0.496,1.052">
+                                        <RadialGradientBrush.RelativeTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform CenterX="0.5" CenterY="0.5" 
+                                   ScaleX="1.5" ScaleY="1.5"/>
+                                                <TranslateTransform X="0.02" Y="0.3"/>
+                                            </TransformGroup>
+                                        </RadialGradientBrush.RelativeTransform>
+                                        <GradientStop Color="#FF0099FF" Offset="1"/>
+                                        <GradientStop Color="#0066FF" Offset="0.3"/>
+                                    </RadialGradientBrush>
+                                </Border.Background>
+                                <ContentPresenter HorizontalAlignment="Center"
+                         VerticalAlignment="Center"
+                         ></ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border">
+                                    <Setter.Value>
+                                        <RadialGradientBrush GradientOrigin="0.496,1.052">
+                                            <RadialGradientBrush.RelativeTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="1.5" ScaleY="1.5"/>
+                                                    <TranslateTransform X="0.02" Y="0.3"/>
+                                                </TransformGroup>
+                                            </RadialGradientBrush.RelativeTransform>
+                                            <GradientStop Color="#FF0099FF" Offset="1"/>
+                                            <GradientStop Color="#0066FF" Offset="0.3"/>
+                                        </RadialGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF33962B"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+       
+        <ScrollViewer   Background="{x:Null}" BorderBrush="{x:Null}" Grid.Row="0" 
+                 VerticalScrollBarVisibility="Visible" CanContentScroll="True">
+            <ListView Name="listbox_doZdrobienia" Background="White">
+           
+            </ListView>
+        </ScrollViewer>
+         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="1,1,16,1" HorizontalAlignment="Right">
+            <Button Name="btn_dodaj" Click="btn_dodaj_Click"  Style="{DynamicResource RoundCorner}"> Dodaj do listy
+            </Button>
+            <Button Name="btn_zaznaczone"  Style="{DynamicResource RoundCorner}">Usuń zaznaczone
+            </Button>
+            <Button Name="btn_wyczysc" Click="btn_wyczysc_Click" Style="{DynamicResource RoundCorner}">Wyczyść liste
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
